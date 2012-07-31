@@ -1,6 +1,7 @@
 //
 // get the demo JSON file and load it into a window
 //
+
 var file = Titanium.Filesystem.getFile('events/default.json');
 var event1 = JSON.parse(file.read().text);
 
