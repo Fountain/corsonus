@@ -14,7 +14,8 @@ var Player = require('player');
 Ti.include('admin_data.js');
 Ti.include('timer.js');
 
-ScoreStore.download('http://corsonus.com/audio/0001/track_01.mp3', function(path){
+ScoreStore.fetchOrDownload('http://corsonus.com/audio/0001/track_01.mp3', function(audioFile){
+	var path = audioFile.getNativePath();
 	Ti.API.info("time to play: ", path);
 	Player.setUrl(path);
 	Player.play();
