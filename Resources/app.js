@@ -10,16 +10,26 @@ Titanium.UI.setBackgroundImage('images/splash~iphone.png');
 Ti.include('home.js');
 Ti.include('local_data.js');
 var ScoreStore = require('score_store');
+var DataStore = require('data_store');
 var Player = require('player');
 Ti.include('admin_data.js');
 Ti.include('timer.js');
 
-ScoreStore.fetchOrDownload('http://corsonus.com/audio/0001/track_01.mp3', function(audioFile){
-	var path = audioFile.getNativePath();
-	Ti.API.info("time to play: ", path);
-	Player.setUrl(path);
-	Player.play();
+
+DataStore.fetchLatest(function(json){
+	var tracks = json.tracks;
+	for (var i = 0; i < tracks.length; i++){
+		ScoreStore.fetchOrDownload(tracks[i].audio_url);
+	}
 });
+
+// ScoreStore.fetchOrDownload('http://corsonus.com/audio/0001/track_01.mp3', function(audioFile){
+	// var path = audioFile.getNativePath();
+	// Ti.API.info("time to play: ", path);
+	// Player.setUrl(path);
+	// Player.play();
+// });
+
 
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup();

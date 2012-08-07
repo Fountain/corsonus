@@ -12,14 +12,12 @@ exports.download = function(url, callback){
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available
 		onload : function(e) {
-			Ti.API.info("Received file");
+			Ti.API.info("Received file", url);
 
-			Ti.API.info("writing file");
 			audioFile.write(this.responseData);
-			Ti.API.info("file written");
 
-			var elapsed = Date.now() - start;
-			Ti.API.info("download time: " + elapsed);
+			var elapsed = (Date.now() - start) / 1000;
+			Ti.API.info('download time for ' + url + ' - ' + elapsed + ' seconds');
 			if (callback) callback(audioFile);
 		},
 		// function called when an error occurs, including a timeout
@@ -30,6 +28,7 @@ exports.download = function(url, callback){
 		timeout : 10000 // in milliseconds
 	});
 	// Prepare the connection.
+	Ti.API.info('downloading', url);
 	client.open('GET', url);
 	// Send the request.
 	client.send();
@@ -38,8 +37,8 @@ exports.download = function(url, callback){
 exports.fetchOrDownload = function(url, callback){
 	var audioFile = getAudioFile(url);
 	if (audioFile.exists()){
-		Ti.API.info('file exists');
-		callback(audioFile);
+		Ti.API.info(url + ' exists');
+		if (callback) callback(audioFile);
 	} else {
 		exports.download(url, callback);
 	}
