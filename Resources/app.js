@@ -9,6 +9,7 @@ Titanium.UI.setBackgroundImage('images/splash~iphone.png');
 
 Ti.include('home.js');
 Ti.include('local_data.js');
+Ti.include('score_store.js');
 Ti.include('admin_data.js');
 Ti.include('timer.js');
 

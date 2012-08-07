@@ -6,7 +6,7 @@ var tab2;
 (function(){
 	var DataStore = {
 		lastUpdated: undefined, // milliseconds since epoch
-		data: undefined, // the JSON returned from the server
+		manifestData: undefined, // the JSON returned from the server
 		
 		fetchLatest: function(callback) {
 			var self = this;
@@ -18,7 +18,7 @@ var tab2;
 					
 					var json = JSON.parse(this.responseText);
 					self.lastUpdated = Date.now();
-					self.data = json;
+					self.manifestData = json;
 					if (callback) callback(json);
 				},
 				// function called when an error occurs, including a timeout
