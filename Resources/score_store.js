@@ -3,21 +3,24 @@ var ScoreStore = {
 	manifestData : undefined, // the JSON returned from the server
 
 	download : function(url, callback) {
-		var userDir = Titanium.Filesystem.getApplicationDataDirectory();
+		var start = Date.now(),
+			userDir = Titanium.Filesystem.getApplicationDataDirectory();
 
 		var client = Ti.Network.createHTTPClient({
 			// function called when the response data is available
 			onload : function(e) {
 				Ti.API.info("Received file");
-				alert('success');
 
 				var filename = url.match(/\/([^\/]+)$/)[1],
 					writeFile = Titanium.Filesystem.getFile(userDir, filename);
 
+				Ti.API.info("writing file");
 				writeFile.write(this.responseData);
-				writeFile.close();
+				Ti.API.info("file written");
 
-				if (callback) callback(json);
+				var elapsed = Date.now() - start;
+				Ti.API.info("download time: " + elapsed);
+				if (callback) callback(writeFile.getNativePath());
 			},
 			// function called when an error occurs, including a timeout
 			onerror : function(e) {
@@ -33,4 +36,5 @@ var ScoreStore = {
 	}
 };
 
-ScoreStore.download('http://corsonus.com/audio/0001/track_01.mp3');
+exports = ScoreStore;
+

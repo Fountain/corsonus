@@ -13,11 +13,10 @@ var tab2;
 			var client = Ti.Network.createHTTPClient({
 				// function called when the response data is available
 				onload : function(e) {
-					Ti.API.info("Received text: " + this.responseText);
-					alert('success');
+					Ti.API.info("Received JSON");
 					
-					var json = JSON.parse(this.responseText);
 					self.lastUpdated = Date.now();
+					var json = JSON.parse(this.responseText);
 					self.manifestData = json;
 					if (callback) callback(json);
 				},

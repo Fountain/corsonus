@@ -9,9 +9,16 @@ Titanium.UI.setBackgroundImage('images/splash~iphone.png');
 
 Ti.include('home.js');
 Ti.include('local_data.js');
-Ti.include('score_store.js');
+var ScoreStore = require('score_store');
+var Player = require('player');
 Ti.include('admin_data.js');
 Ti.include('timer.js');
+
+ScoreStore.download('http://corsonus.com/audio/0001/track_01.mp3', function(path){
+	Ti.API.info("time to play: ", path);
+	Player.setUrl(path);
+	Player.play();
+});
 
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup();
