@@ -20,8 +20,11 @@ win1.add(label1);
 var rowSize = 0,
 	row;
 
-Ti.App.addEventListener('app:track.added', function(track, audioFile){
-	// Create Button 1
+Ti.App.addEventListener('app:track.added', function(e){
+	var track = e.track,
+		audioFilePath = e.audioFilePath;
+	
+	// Create Button
 	var button = Titanium.UI.createButton({
 	   title: track.name,
 	   width: '46%',
@@ -31,17 +34,26 @@ Ti.App.addEventListener('app:track.added', function(track, audioFile){
 	
 	button.addEventListener('click', function(e){
 		var date = new Date();
-  		var prettyTime = String.formatDate(date) + " " + String.formatTime(date);
-   		Titanium.API.info("You clicked button one at " + prettyTime);
-   		button1.title = "Please Wait.";
-   		var millisecondsTillTopOfMinute = 60000 - (Date.now() % 60000);
+		var prettyTime = String.formatDate(date) + " " + String.formatTime(date);
+		Titanium.API.info("You clicked button at " + prettyTime);
+		button.title = "Please Wait.";
+		var millisecondsTillTopOfMinute = 60000 - (Date.now() % 60000);
 		var secondsTillTopOfMinute = Math.floor(millisecondsTillTopOfMinute / 1000);
 		Titanium.API.info(secondsTillTopOfMinute + " seconds till audio starts.");
-   		var button1_timer = new countDown(0, secondsTillTopOfMinute, function(){
-   			button1.title = button1_timer.time.s;
-   		}, playAudio1);
-   		button1_timer.start();  
-	});
+		var button_timer = new countDown({
+			m : 0,
+			s : secondsTillTopOfMinute,
+			fn_tick : function() {
+				button.title = button_timer.time.s;
+			},
+			fn_end : function() {
+				Player.setUrl(audioFilePath);
+				Player.play();
+			}
+		});
+		button_timer.start();
+	}); 
+
 	
 	if (!row){
 		row = Titanium.UI.createView({

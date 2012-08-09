@@ -23,7 +23,10 @@ DataStore.fetchLatest(function(json){
 	for (var i = 0; i < tracks.length; i++){
 		track = tracks[i];
 		ScoreStore.fetchOrDownload(track.audio_url, function(audioFile){
-			Ti.App.fireEvent('app:track.added', track, audioFile);
+			Ti.App.fireEvent('app:track.added', {
+				track: track,
+				audioFilePath: audioFile.getNativePath()
+			});
 		});
 	}
 });
