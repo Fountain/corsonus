@@ -17,9 +17,14 @@ Ti.include('timer.js');
 
 
 DataStore.fetchLatest(function(json){
-	var tracks = json.tracks;
+	var tracks = json.tracks,
+		track;
+
 	for (var i = 0; i < tracks.length; i++){
-		ScoreStore.fetchOrDownload(tracks[i].audio_url);
+		track = tracks[i];
+		ScoreStore.fetchOrDownload(track.audio_url, function(audioFile){
+			Ti.App.fireEvent('app:track.added', track, audioFile);
+		});
 	}
 });
 
