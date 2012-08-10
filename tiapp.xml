@@ -8,9 +8,9 @@
         <target device="blackberry">false</target>
     </deployment-targets>
     <sdk-version>2.1.1.GA</sdk-version>
-    <id>corsonus</id>
+    <id>com.corsonus.corsonus</id>
     <name>corsonus</name>
-    <version>.13</version>
+    <version>.14</version>
     <publisher>fountain</publisher>
     <url>http://corsonus.com</url>
     <description>not specified</description>

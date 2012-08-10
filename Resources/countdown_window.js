@@ -6,7 +6,7 @@ var countdownWindow = Titanium.UI.createWindow({
 // title
 var titleLabel = Titanium.UI.createLabel({
 	color:'#999',
-	text:'Your Corsonus experience will begin in',
+	text:'The performance will begin in',
 	font:{fontSize:22, fontFamily:'Helvetica Neue'},
 	top: 30,
 	textAlign:'center',
@@ -23,7 +23,7 @@ var countdownLabel = Titanium.UI.createLabel({
 
 var instructionsLabel = Titanium.UI.createLabel({
 	color:'#999',
-	text:'Make sure your app is open just before the performance beigns.',
+	text:'Make sure your app is open just before the performance begins.',
 	font:{fontSize:15, fontFamily:'Helvetica Neue'},
 	top: 15,
 	textAlign:'center',
