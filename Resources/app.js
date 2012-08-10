@@ -9,9 +9,28 @@ var DataStore = require('data_store');
 var Player = require('player');
 var Timer = require('timer');
 var Remote = require('remote');
+var introWindow = require('intro_window');
+
+introWindow.open({navBarHidden: true});
 
 // fetch performance data
 DataStore.fetchLatest();
 Remote.fetchStartTime();
 
-tracksWindow.open({navBarHidden: true});
+
+// delay hiding the intro window
+setTimeout(function(){
+	Ti.App.addEventListener('app:remote.tick', function(e){
+		// show the Tracks window if the performance is within an hour
+		Ti.API.info('ticking ' + e.remaining);
+		if (e.remaining < 60 * 60){
+			introWindow.close();
+			tracksWindow.open({navBarHidden: true});
+		}
+	});
+}, 6000);
+
+Ti.App.addEventListener('app:remote.start', function(){
+	tracksWindow.close();
+	// tracksWindow.setVisible(false);
+});

@@ -9,13 +9,17 @@ var startCoundown = function(msTilStart){
 		// cancel prior countdown
 		timer.stop();
 	}
+	
+	Ti.App.fireEvent('app:remote.countdown');
 
 	timer = new Timer({
 		m: 0,
 		s: Math.floor(msTilStart / 1000),
 		fn_tick: function(remaining){
 			Ti.API.info("Remaining time: " + remaining);
-			Ti.App.fireEvent('app:remote.tick', remaining);
+			Ti.App.fireEvent('app:remote.tick', {
+				remaining: remaining
+			});
 		},
 		fn_end: function(){
 			Ti.App.fireEvent('app:remote.start');
