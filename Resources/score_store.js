@@ -3,7 +3,7 @@ var userDir = Titanium.Filesystem.getApplicationDataDirectory();
 var getAudioFile = function(url){
 	var filename = url.match(/\/([^\/]+)$/)[1];
 	return Titanium.Filesystem.getFile(userDir, filename);
-}
+};
 
 exports.download = function(url, callback){
 	var start = Date.now(),
@@ -12,12 +12,13 @@ exports.download = function(url, callback){
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available
 		onload : function(e) {
-			Ti.API.info("Received file", url);
+			Ti.API.info("Received file" + url);
 
 			audioFile.write(this.responseData);
 
 			var elapsed = (Date.now() - start) / 1000;
 			Ti.API.info('download time for ' + url + ' - ' + elapsed + ' seconds');
+			
 			if (callback) callback(audioFile);
 		},
 		// function called when an error occurs, including a timeout
@@ -28,7 +29,7 @@ exports.download = function(url, callback){
 		timeout : 10000 // in milliseconds
 	});
 	// Prepare the connection.
-	Ti.API.info('downloading', url);
+	Ti.API.info('downloading ' + url);
 	client.open('GET', url);
 	// Send the request.
 	client.send();

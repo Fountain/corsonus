@@ -20,10 +20,7 @@ win1.add(label1);
 var rowSize = 0,
 	row;
 
-Ti.App.addEventListener('app:track.added', function(e){
-	var track = e.track,
-		audioFilePath = e.audioFilePath;
-	
+Ti.App.addEventListener('app:track.downloaded', function(track){
 	// Create Button
 	var button = Titanium.UI.createButton({
 	   title: track.name,
@@ -42,12 +39,12 @@ Ti.App.addEventListener('app:track.added', function(e){
 		Titanium.API.info(secondsTillTopOfMinute + " seconds till audio starts.");
 		var button_timer = new countDown({
 			m : 0,
-			s : secondsTillTopOfMinute,
+			s : 3, //secondsTillTopOfMinute,
 			fn_tick : function() {
 				button.title = button_timer.time.s;
 			},
 			fn_end : function() {
-				Player.setUrl(audioFilePath);
+				Player.setUrl(track.file_path);
 				Player.play();
 			}
 		});

@@ -16,16 +16,7 @@ Ti.include('admin_data.js');
 Ti.include('timer.js');
 
 
-DataStore.fetchLatest(function(json){
-	json.tracks.forEach(function(track){
-		ScoreStore.fetchOrDownload(track.audio_url, function(audioFile){
-			Ti.App.fireEvent('app:track.added', {
-				track: track,
-				audioFilePath: audioFile.getNativePath()
-			});
-		});
-	});
-});
+DataStore.fetchLatest();
 
 
 // create tab group
