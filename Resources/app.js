@@ -9,6 +9,7 @@ var Player = require('player');
 var Timer = require('timer');
 var Remote = require('remote');
 var introWindow = require('intro_window');
+var countdownWindow = require('countdown_window');
 var creditsWindow = require('credits_window');
 
 introWindow.open();
@@ -25,31 +26,49 @@ var dataFetchInterval = setInterval(function(){
 }, 10000);
 
 
+var onTrackChosen = function(){
+	introWindow.close();
+	tracksWindow.close();
+	countdownWindow.open();
+	creditsWindow.close();
+};
+
+
 // delay hiding the intro window
 setTimeout(function(){
 	Ti.App.addEventListener('app:remote.tick', function(e){
 		// show the Tracks window if the performance is within an hour
-		if (e.remaining < 60 * 60){
+		if (chosenTrack){ // global
+			onTrackChosen();
+		} else if (e.remaining < 60 * 60){
 			introWindow.close();
 			tracksWindow.open();
+			countdownWindow.close();
 			creditsWindow.close();
 		}
 	});
 }, 6000);
 
 
-Ti.App.addEventListener('app:remote.start', function(){
+Ti.App.addEventListener('app:track.choose', onTrackChosen);
+
+
+var onMusicPlay = function(){
 	clearInterval(dataFetchInterval);
 	
 	introWindow.close();
 	tracksWindow.close();
+	countdownWindow.close();
 	creditsWindow.close();
-});
+};
 
+Ti.App.addEventListener('app:remote.start', onMusicPlay);
+Player.addEventListener('resume', onMusicPlay);
 
 Player.addEventListener('complete', function(){
 	introWindow.close();
 	tracksWindow.close();
+	countdownWindow.close();
 	creditsWindow.open();
 });
 
