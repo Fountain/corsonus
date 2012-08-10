@@ -13,11 +13,13 @@ Ti.include('local_data.js');
 var ScoreStore = require('score_store');
 var DataStore = require('data_store');
 var Player = require('player');
+var Remote = require('remote');
 Ti.include('admin_data.js');
 Ti.include('timer.js');
 
 
 DataStore.fetchLatest();
+Remote.update();
 
 
 // create tab group

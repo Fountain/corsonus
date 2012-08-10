@@ -1,9 +1,3 @@
-// Create audio player and load mp3
-var audioPlayer1 = Ti.Media.createSound({ 
-    url: 'audio/countdown.mp3',
-    preload: true
-});
-
 var startTime = 60000 - (Date.now() % 60000);
 // get # of seconds till startTime
 var secondsRemaining = Math.floor(startTime / 1000);
@@ -53,10 +47,3 @@ function countdownTimer() {
 			}, 1000)
 }
 
-function playAudio1() {
-	Titanium.API.info("Playing Audio One");
-	audioPlayer1.play();
-	audioPlayer1.addEventListener('complete', function() {
-	button1.title = "Audio One";
-	});   
-}
