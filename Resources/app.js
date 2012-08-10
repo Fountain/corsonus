@@ -7,6 +7,7 @@ Titanium.UI.setBackgroundImage('images/splash~iphone.png');
 // create base UI tab and root window
 //
 
+Ti.include('lib/underscore.js');
 Ti.include('home.js');
 Ti.include('local_data.js');
 var ScoreStore = require('score_store');

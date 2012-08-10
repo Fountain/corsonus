@@ -10,6 +10,50 @@ var lastUpdated, // milliseconds since epoch
 //   artist_name: "Reggie Watts"
 // }
 
+exports.getTrackByUrl = function(url){
+	return tracksByUrl[url];
+};
+
+var addTrack = function(track){
+	var audioUrl = track.audio_url,
+		existingTrack = exports.getTrackByUrl(audioUrl);
+
+	if (existingTrack){
+		// overwrite with new data
+		// TODO 'change' events?
+		_.extend(existingTrack, track);
+		track = existingTrack;
+	} else {
+		// add to index
+		tracksByUrl[audioUrl] = track;
+	}
+
+	if (!track.file_path){
+		// download the file
+		ScoreStore.fetchOrDownload(audioUrl, function(audioFile){
+			track.file_path = audioFile.getNativePath();
+			Ti.API.info(JSON.stringify(track));
+			Ti.App.fireEvent('app:track.downloaded', track);
+		});
+	}
+
+	if (!existingTrack){
+		Ti.App.fireEvent('app:track.added', track);
+	}
+};
+
+
+var walkerFile = Titanium.Filesystem.getFile('audio/corsonus-walker-001.mp3');
+
+var defaultTrack = {
+  audio_url: "http://corsonus.com/audio/0001/corsonus-walker-001.mp3",
+  file_path: walkerFile.getNativePath(),
+  name: "Orange",
+  artist_name: "Tyler Walker"
+};
+addTrack(defaultTrack);
+
+
 exports.fetchLatest = function(callback) {
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available
@@ -20,16 +64,7 @@ exports.fetchLatest = function(callback) {
 			var json = JSON.parse(this.responseText);
 			manifestData = json;
 			json.tracks.forEach(function(track){
-				tracksByUrl[track.audio_url] = track;
-
-				// download the file
-				ScoreStore.fetchOrDownload(track.audio_url, function(audioFile){
-					track.file_path = audioFile.getNativePath();
-					Ti.API.info(JSON.stringify(track));
-					Ti.App.fireEvent('app:track.downloaded', track);
-				});
-				
-				Ti.App.fireEvent('app:track.added', track);
+				addTrack(track);
 			});
 			
 			if (callback) callback(json);

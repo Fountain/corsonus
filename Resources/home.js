@@ -20,7 +20,7 @@ win1.add(label1);
 var rowSize = 0,
 	row;
 
-Ti.App.addEventListener('app:track.downloaded', function(track){
+Ti.App.addEventListener('app:track.added', function(track){
 	// Create Button
 	var button = Titanium.UI.createButton({
 	   title: track.name,
