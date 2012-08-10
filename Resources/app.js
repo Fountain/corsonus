@@ -2,7 +2,6 @@
 Titanium.UI.setBackgroundColor('#000');
 Titanium.UI.setBackgroundImage('images/splash~iphone.png');
 
-Ti.include('lib/underscore.js');
 Ti.include('home.js');
 var ScoreStore = require('score_store');
 var DataStore = require('data_store');
