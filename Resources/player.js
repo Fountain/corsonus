@@ -11,5 +11,9 @@ sound.playTrack = function(track){
 	sound.play();
 };
 
+sound.addEventListener('complete', function(){
+	sound.release();
+});
+
 
 exports = sound;
