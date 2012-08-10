@@ -88,7 +88,7 @@ exports.ensureDownloaded = function(track){
 	}
 };
 
-exports.getTrackByUrl = function(url){
-	return tracksByUrl[url];
+exports.getCredits = function(){
+	return manifestData.credits;
 };
 

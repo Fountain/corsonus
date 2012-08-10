@@ -6,7 +6,10 @@ var sound = Ti.Media.createSound({
 	allowBackground: true // for Android
 });
 
-exports.playTrack = function(track){
+sound.playTrack = function(track){
 	sound.setUrl(track.file_path);
 	sound.play();
 };
+
+
+exports = sound;
