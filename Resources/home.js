@@ -8,13 +8,24 @@ var win1 = Titanium.UI.createWindow({
 //
 var label1 = Titanium.UI.createLabel({
 	color:'#999',
-	text:'Corsonus: alpha',
+	text:'Corsonus:Four',
 	font:{fontSize:22, fontFamily:'Helvetica Neue'},
 	top: 20,
 	textAlign:'center',
 	width: 200
 });
 win1.add(label1);
+
+
+var instructionLabel = Titanium.UI.createLabel({
+	color:'#999',
+	text: "Please select an audio performance to download.  Wi-fi recommended.",
+	font:{fontSize:15, fontFamily:'Helvetica Neue'},
+	top: 15,
+	textAlign:'center',
+	width: 300
+});
+win1.add(instructionLabel);
 
 
 var chosenTrack;
