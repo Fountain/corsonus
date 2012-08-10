@@ -1,11 +1,10 @@
+// root window
 var win1 = Titanium.UI.createWindow({  
     navBarHidden: true,
     layout: 'vertical'
 });
 
-//
-// create base UI tab and root window
-//
+// title
 var label1 = Titanium.UI.createLabel({
 	color:'#999',
 	text:'Corsonus:Four',
@@ -16,7 +15,7 @@ var label1 = Titanium.UI.createLabel({
 });
 win1.add(label1);
 
-
+// instructions
 var instructionLabel = Titanium.UI.createLabel({
 	color:'#999',
 	text: "Please select an audio performance to download.  Wi-fi recommended.",
@@ -85,9 +84,3 @@ Ti.App.addEventListener('app:remote.start', function(){
 	Player.playTrack(track);
 });
 
-
-var tab1 = Titanium.UI.createTab({  
-    icon:'KS_nav_views.png',
-    title:'Main',
-    window:win1
-});
