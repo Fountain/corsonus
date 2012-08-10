@@ -46,7 +46,18 @@ Ti.App.addEventListener('app:track.added', function(track){
 	   width: '46%',
 	   height: 45,
 	   left: 10,
-	   top: 10
+	   top: 10,
+	   backgroundGradient: {
+            type: 'linear',
+            startPoint: { x: '50%', y: '0%' },
+            endPoint: { x: '50%', y: '100%' },
+            colors: [ { color: '#003333', offset: 0.0}, { color: '#004041', offset: 0.25 }, { color: '#003333', offset: 1.0 } ],
+       },
+       borderColor: '#999',
+       color: '#999',
+       borderWidth: '1',
+	   borderRadius: 11,
+	   backgroundImage: 'none'	
 	});
 	
 	button.addEventListener('click', function(e){
