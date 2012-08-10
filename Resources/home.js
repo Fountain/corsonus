@@ -21,6 +21,7 @@ var chosenTrack;
 
 var onTrackClick = function(button, track){
 	chosenTrack = track;
+	DataStore.ensureDownloaded(track);
 	// TODO change button state
 };
 

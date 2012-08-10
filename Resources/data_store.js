@@ -28,15 +28,6 @@ var addTrack = function(track){
 		tracksByUrl[audioUrl] = track;
 	}
 
-	if (!track.file_path){
-		// download the file
-		ScoreStore.fetchOrDownload(audioUrl, function(audioFile){
-			track.file_path = audioFile.getNativePath();
-			Ti.API.info(JSON.stringify(track));
-			Ti.App.fireEvent('app:track.downloaded', track);
-		});
-	}
-
 	if (!existingTrack){
 		Ti.App.fireEvent('app:track.added', track);
 	}
@@ -84,6 +75,17 @@ exports.fetchLatest = function(callback) {
 	client.open('GET', 'http://corsonus.com/programs/corsonus-1.json');
 	// Send the request.
 	client.send();
+};
+
+exports.ensureDownloaded = function(track){
+	if (!track.file_path){
+		// download the file
+		ScoreStore.fetchOrDownload(track.audio_url, function(audioFile){
+			track.file_path = audioFile.getNativePath();
+			Ti.API.info(JSON.stringify(track));
+			Ti.App.fireEvent('app:track.downloaded', track);
+		});
+	}
 };
 
 exports.getTrackByUrl = function(url){
