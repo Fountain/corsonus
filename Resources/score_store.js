@@ -24,7 +24,6 @@ exports.download = function(url, callback){
 		// function called when an error occurs, including a timeout
 		onerror : function(e){
 			Ti.API.debug(e.error);
-			alert('error');
 		},
 		timeout : 10000 // in milliseconds
 	});
