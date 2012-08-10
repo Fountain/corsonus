@@ -17,26 +17,15 @@ Ti.include('timer.js');
 
 
 DataStore.fetchLatest(function(json){
-	var tracks = json.tracks,
-		track;
-
-	for (var i = 0; i < tracks.length; i++){
-		track = tracks[i];
+	json.tracks.forEach(function(track){
 		ScoreStore.fetchOrDownload(track.audio_url, function(audioFile){
 			Ti.App.fireEvent('app:track.added', {
 				track: track,
 				audioFilePath: audioFile.getNativePath()
 			});
 		});
-	}
+	});
 });
-
-// ScoreStore.fetchOrDownload('http://corsonus.com/audio/0001/track_01.mp3', function(audioFile){
-	// var path = audioFile.getNativePath();
-	// Ti.API.info("time to play: ", path);
-	// Player.setUrl(path);
-	// Player.play();
-// });
 
 
 // create tab group
