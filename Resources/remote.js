@@ -15,7 +15,7 @@ var startCoundown = function(msTilStart){
 		s: Math.floor(msTilStart / 1000),
 		fn_tick: function(remaining){
 			Ti.API.info("Remaining time: " + remaining);
-			Ti.App.fireEvent('app:remote.countdown', remaining);
+			Ti.App.fireEvent('app:remote.tick', remaining);
 		},
 		fn_end: function(){
 			Ti.App.fireEvent('app:remote.start');

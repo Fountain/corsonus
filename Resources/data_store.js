@@ -53,6 +53,10 @@ var defaultTrack = {
 };
 addTrack(defaultTrack);
 
+exports.getDefaultTrack = function(){
+	return defaultTrack;
+};
+
 
 exports.fetchLatest = function(callback) {
 	var client = Ti.Network.createHTTPClient({

@@ -17,27 +17,11 @@ var label1 = Titanium.UI.createLabel({
 win1.add(label1);
 
 
+var chosenTrack;
 
 var onTrackClick = function(button, track){
-	var date = new Date();
-	var prettyTime = String.formatDate(date) + " " + String.formatTime(date);
-	Titanium.API.info("You clicked button at " + prettyTime);
-	button.title = "Please Wait.";
-	var millisecondsTillTopOfMinute = 60000 - (Date.now() % 60000);
-	var secondsTillTopOfMinute = Math.floor(millisecondsTillTopOfMinute / 1000);
-	Titanium.API.info(secondsTillTopOfMinute + " seconds till audio starts.");
-	var button_timer = new Timer({
-		m : 0,
-		s : 3, //secondsTillTopOfMinute,
-		fn_tick : function(remaining) {
-			button.title = remaining;
-		},
-		fn_end : function() {
-			Player.setUrl(track.file_path);
-			Player.play();
-		}
-	});
-	button_timer.start();
+	chosenTrack = track;
+	// TODO change button state
 };
 
 
@@ -72,6 +56,21 @@ Ti.App.addEventListener('app:track.added', function(track){
 		rowSize = 0;
 		row = null;
 	}
+});
+
+
+Ti.App.addEventListener('app:remote.start', function(){
+	// fall back to the default track if the chosen one hasn't been downloaded
+	var track;
+	if (chosenTrack && chosenTrack.file_path){
+		Ti.API.info("Playing chosen track: " + chosenTrack.name);
+	 	track = chosenTrack;
+	} else {
+		Ti.API.info("playing default track");
+		track = DataStore.getDefaultTrack();
+	}
+
+	Player.playTrack(track);
 });
 
 
