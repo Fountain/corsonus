@@ -7,7 +7,7 @@ Ti.include('home.js');
 var ScoreStore = require('score_store');
 var DataStore = require('data_store');
 var Player = require('player');
-Ti.include('timer.js');
+var Timer = require('timer');
 var Remote = require('remote');
 
 // prefetch audio
