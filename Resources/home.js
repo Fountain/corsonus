@@ -9,7 +9,7 @@ var label1 = Titanium.UI.createLabel({
 	color:'#999',
 	text:'Corsonus:Four',
 	font:{fontSize:22, fontFamily:'Helvetica Neue'},
-	top: 20,
+	top: 10,
 	textAlign:'center',
 	width: 200
 });
@@ -20,9 +20,9 @@ var instructionLabel = Titanium.UI.createLabel({
 	color:'#999',
 	text: "Please select an audio performance to download.  Wi-fi recommended.",
 	font:{fontSize:15, fontFamily:'Helvetica Neue'},
-	top: 15,
 	textAlign:'center',
-	width: 300
+	width: 300,
+	top: 10
 });
 win1.add(instructionLabel);
 
@@ -44,8 +44,9 @@ Ti.App.addEventListener('app:track.added', function(track){
 	var button = Titanium.UI.createButton({
 	   title: track.name,
 	   width: '46%',
-	   height: 50,
-	   left: 5
+	   height: 45,
+	   left: 10,
+	   top: 10
 	});
 	
 	button.addEventListener('click', function(e){
@@ -56,7 +57,7 @@ Ti.App.addEventListener('app:track.added', function(track){
 		row = Titanium.UI.createView({
 			width: '90%',
 			layout: 'horizontal',
-			top: 20
+			top: 10
 		});
 		win1.add(row);
 	}
