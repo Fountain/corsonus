@@ -9,6 +9,7 @@ var Player = require('player');
 var Timer = require('timer');
 var Remote = require('remote');
 var introWindow = require('intro_window');
+var creditsWindow = require('credits_window');
 
 introWindow.open();
 
@@ -31,42 +32,24 @@ setTimeout(function(){
 		if (e.remaining < 60 * 60){
 			introWindow.close();
 			tracksWindow.open();
+			creditsWindow.close();
 		}
 	});
 }, 6000);
 
 
 Ti.App.addEventListener('app:remote.start', function(){
-	tracksWindow.close();
 	clearInterval(dataFetchInterval);
+	
+	introWindow.close();
+	tracksWindow.close();
+	creditsWindow.close();
 });
 
 
 Player.addEventListener('complete', function(){
-	var creditsWindow = Titanium.UI.createWindow({
-	    navBarHidden: true,
-	    layout: 'vertical'
-	});
-	
-	var creditsScroller = Ti.UI.createScrollView({
-		contentWidth: 'auto',
-		scrollType: 'vertical',
-		showVerticalScrollIndicator: true,
-		height: '100%',
-		width: '100%'
-    });
-	
-	var creditsLabel = Titanium.UI.createLabel({
-		color:'#999',
-		text: DataStore.getCredits(),
-		font:{fontSize:15, fontFamily:'Helvetica Neue'},
-		top: 20,
-		textAlign:'center',
-		width: 275
-	});
-	
-    creditsScroller.add(creditsLabel);
-    creditsWindow.add(creditsScroller);
+	introWindow.close();
+	tracksWindow.close();
 	creditsWindow.open();
 });
 
