@@ -54,7 +54,6 @@ exports.fetchStartTime = function(){
 		// function called when an error occurs, including a timeout
 		onerror : function(e){
 			Ti.API.debug(e.error);
-			alert('error');
 		},
 		timeout : 3000 // in milliseconds
 	});
