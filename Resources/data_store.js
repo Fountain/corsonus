@@ -18,17 +18,9 @@ var addTrack = function(track){
 	var audioUrl = track.audio_url,
 		existingTrack = exports.getTrackByUrl(audioUrl);
 
-	if (existingTrack){
-		// overwrite with new data
-		// TODO 'change' events?
-		_.extend(existingTrack, track);
-		track = existingTrack;
-	} else {
+	if (!existingTrack){
 		// add to index
 		tracksByUrl[audioUrl] = track;
-	}
-
-	if (!existingTrack){
 		Ti.App.fireEvent('app:track.added', track);
 	}
 };
@@ -88,7 +80,7 @@ exports.ensureDownloaded = function(track){
 	}
 };
 
-exports.getTrackByUrl = function(url){
-	return tracksByUrl[url];
+exports.getCredits = function(){
+	return manifestData.credits;
 };
 

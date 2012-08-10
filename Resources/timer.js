@@ -1,8 +1,4 @@
-var startTime = 60000 - (Date.now() % 60000);
-// get # of seconds till startTime
-var secondsRemaining = Math.floor(startTime / 1000);
-
-var Timer = function(opts){
+exports = function(opts){
 	return {
 		total_sec: opts.m * 60 + opts.s,
 		timer:this.timer,
@@ -32,17 +28,4 @@ var Timer = function(opts){
 			return this;
 		}
 	}
-}
-
-function countdownTimer() {
-	var counter = setInterval(function() {
-				var millisecondsTillTopOfMinute = 60000 - (Date.now() % 60000);
-				var secondsTillTopOfMinute = Math.floor(millisecondsTillTopOfMinute / 1000);
-				Titanium.API.info(secondsTillTopOfMinute + " seconds till audio starts.");
-				if (secondsTillTopOfMinute === 0) {
-					clearInterval(counter);
-				}
-				updateButton(secondsTillTopOfMinute) ;
-			}, 1000)
-}
-
+};

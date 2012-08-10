@@ -1,11 +1,11 @@
 // root window
-var win1 = Titanium.UI.createWindow({  
+var tracksWindow = Titanium.UI.createWindow({
     navBarHidden: true,
     layout: 'vertical'
 });
 
 // title
-var label1 = Titanium.UI.createLabel({
+var titleLabel = Titanium.UI.createLabel({
 	color:'#999',
 	text:'Corsonus:Four',
 	font:{fontSize:22, fontFamily:'Helvetica Neue'},
@@ -13,7 +13,7 @@ var label1 = Titanium.UI.createLabel({
 	textAlign:'center',
 	width: 200
 });
-win1.add(label1);
+tracksWindow.add(titleLabel);
 
 // instructions
 var instructionLabel = Titanium.UI.createLabel({
@@ -24,7 +24,7 @@ var instructionLabel = Titanium.UI.createLabel({
 	width: 300,
 	top: 10
 });
-win1.add(instructionLabel);
+tracksWindow.add(instructionLabel);
 
 
 var chosenTrack;
@@ -70,7 +70,7 @@ Ti.App.addEventListener('app:track.added', function(track){
 			layout: 'horizontal',
 			top: 10
 		});
-		win1.add(row);
+		tracksWindow.add(row);
 	}
 	
 	row.add(button);
