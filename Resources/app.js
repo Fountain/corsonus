@@ -16,12 +16,18 @@ introWindow.open();
 DataStore.fetchLatest();
 Remote.fetchStartTime();
 
+var dataFetchInterval = setInterval(function(){
+	// fetch performance data
+	Ti.API.info('fetching new data');
+	DataStore.fetchLatest();
+	Remote.fetchStartTime();
+}, 10000);
+
 
 // delay hiding the intro window
 setTimeout(function(){
 	Ti.App.addEventListener('app:remote.tick', function(e){
 		// show the Tracks window if the performance is within an hour
-		Ti.API.info('ticking ' + e.remaining);
 		if (e.remaining < 60 * 60){
 			introWindow.close();
 			tracksWindow.open();
@@ -29,8 +35,10 @@ setTimeout(function(){
 	});
 }, 6000);
 
+
 Ti.App.addEventListener('app:remote.start', function(){
 	tracksWindow.close();
+	clearInterval(dataFetchInterval);
 });
 
 
