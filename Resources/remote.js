@@ -1,24 +1,40 @@
 var startTime, timer;
 
+var msRemaining = function(){
+	return startTime ? (startTime.getTime() - Date.now()) : undefined;
+};
+
+var startCoundown = function(msTilStart){
+	if (timer){
+		// cancel prior countdown
+		timer.stop();
+	}
+
+	timer = new Timer({
+		m: 0,
+		s: Math.floor(msTilStart / 1000),
+		fn_tick: function(remaining){
+			Ti.API.info("Remaining time: " + remaining);
+			Ti.App.fireEvent('app:remote.countdown', remaining);
+		},
+		fn_end: function(){
+			Ti.App.fireEvent('app:remote.start');
+		}
+	});
+	timer.start();
+};
+
 var updateStartTime = function(newStart){
 	if (!startTime || newStart.getTime() !== startTime.getTime()){
-		if (timer){
-			// cancel prior countdown
-			timer.stop();
-		}
-		
 		startTime = newStart;
 		Ti.API.info("Updated start time: " + startTime.toString());
-		var msTilStart = startTime.getTime() - Date.now();
-		
-		timer = new Timer({
-			m: 0,
-			s: Math.floor(msTilStart / 1000),
-			fn_tick: function(remaining){
-				Ti.API.info("Remaining time: " + remaining);
-			}
-		});
-		timer.start();
+
+		var msTilStart = msRemaining();
+		if (msTilStart > 0){
+			startCoundown(msTilStart);
+		} else {
+			// no upcoming performance
+		}
 	}
 };
 

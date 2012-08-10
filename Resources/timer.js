@@ -14,16 +14,15 @@ var Timer = function(opts){
 		start: function() {
 			var self = this;
 			this.timer = setInterval( function() {
-				if (self.total_sec) {
+				if (self.total_sec > 0) {
 					self.total_sec--;
 					self.time = { m : parseInt(self.total_sec/60), s: (self.total_sec%60) };
 					opts.fn_tick(self.total_sec);
-				}
-				else {
+				} else {
 					self.stop();
 					opts.fn_end();
 				}
-				}, 1000 );
+			}, 1000 );
 			return this;
 		},
 		stop: function() {
