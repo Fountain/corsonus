@@ -1,14 +1,35 @@
-var nextStart = undefined;
+var startTime, timer;
 
-exports.update = function(){
+var updateStartTime = function(newStart){
+	if (!startTime || newStart.getTime() !== startTime.getTime()){
+		if (timer){
+			// cancel prior countdown
+			timer.stop();
+		}
+		
+		startTime = newStart;
+		Ti.API.info("Updated start time: " + startTime.toString());
+		var msTilStart = startTime.getTime() - Date.now();
+		
+		timer = new Timer({
+			m: 0,
+			s: Math.floor(msTilStart / 1000),
+			fn_tick: function(remaining){
+				Ti.API.info("Remaining time: " + remaining);
+			}
+		});
+		timer.start();
+	}
+};
+
+exports.fetchStartTime = function(){
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available
 		onload : function(e) {
 			var json = JSON.parse(this.responseText);
 			// start time is in milliseconds
-			nextStart = new Date(json.start_time);
-			
-			Ti.API.info("Updated start time: " + nextStart.toString());
+			newStart = new Date(json.start_time);
+			updateStartTime(newStart);
 		},
 		// function called when an error occurs, including a timeout
 		onerror : function(e){

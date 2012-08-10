@@ -26,11 +26,11 @@ var onTrackClick = function(button, track){
 	var millisecondsTillTopOfMinute = 60000 - (Date.now() % 60000);
 	var secondsTillTopOfMinute = Math.floor(millisecondsTillTopOfMinute / 1000);
 	Titanium.API.info(secondsTillTopOfMinute + " seconds till audio starts.");
-	var button_timer = new countDown({
+	var button_timer = new Timer({
 		m : 0,
 		s : 3, //secondsTillTopOfMinute,
-		fn_tick : function() {
-			button.title = button_timer.time.s;
+		fn_tick : function(remaining) {
+			button.title = remaining;
 		},
 		fn_end : function() {
 			Player.setUrl(track.file_path);

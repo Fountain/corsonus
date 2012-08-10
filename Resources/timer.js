@@ -2,7 +2,7 @@ var startTime = 60000 - (Date.now() % 60000);
 // get # of seconds till startTime
 var secondsRemaining = Math.floor(startTime / 1000);
 
-var countDown = function(opts){
+var Timer = function(opts){
 	return {
 		total_sec: opts.m * 60 + opts.s,
 		timer:this.timer,
@@ -17,7 +17,7 @@ var countDown = function(opts){
 				if (self.total_sec) {
 					self.total_sec--;
 					self.time = { m : parseInt(self.total_sec/60), s: (self.total_sec%60) };
-					opts.fn_tick();
+					opts.fn_tick(self.total_sec);
 				}
 				else {
 					self.stop();

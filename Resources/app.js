@@ -19,7 +19,7 @@ Ti.include('timer.js');
 
 
 DataStore.fetchLatest();
-Remote.update();
+Remote.fetchStartTime();
 
 
 // create tab group
