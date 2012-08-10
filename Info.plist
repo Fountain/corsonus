@@ -18,7 +18,6 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>corsonus</string>
-				
 			</array>
 		</dict>
 	</array>
@@ -42,17 +41,20 @@
 	<array>
 		<string>icon@2x.png</string>
 	</array>
-
 	<key>UISupportedInterfaceOrientations~ipad</key>
-		<array>
+	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
-		<array>
+	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
 	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
