@@ -17,7 +17,7 @@ var Remote = require('remote');
 Ti.include('admin_data.js');
 Ti.include('timer.js');
 
-
+// prefetch audio
 DataStore.fetchLatest();
 Remote.fetchStartTime();
 
