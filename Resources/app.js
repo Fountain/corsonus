@@ -10,8 +10,8 @@ var Player = require('player');
 var Timer = require('timer');
 var Remote = require('remote');
 
-// prefetch audio
+// fetch performance data
 DataStore.fetchLatest();
 Remote.fetchStartTime();
 
-win1.open({navBarHidden: true});
+tracksWindow.open({navBarHidden: true});
