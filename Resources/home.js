@@ -17,6 +17,30 @@ var label1 = Titanium.UI.createLabel({
 win1.add(label1);
 
 
+
+var onTrackClick = function(button, track){
+	var date = new Date();
+	var prettyTime = String.formatDate(date) + " " + String.formatTime(date);
+	Titanium.API.info("You clicked button at " + prettyTime);
+	button.title = "Please Wait.";
+	var millisecondsTillTopOfMinute = 60000 - (Date.now() % 60000);
+	var secondsTillTopOfMinute = Math.floor(millisecondsTillTopOfMinute / 1000);
+	Titanium.API.info(secondsTillTopOfMinute + " seconds till audio starts.");
+	var button_timer = new countDown({
+		m : 0,
+		s : 3, //secondsTillTopOfMinute,
+		fn_tick : function() {
+			button.title = button_timer.time.s;
+		},
+		fn_end : function() {
+			Player.setUrl(track.file_path);
+			Player.play();
+		}
+	});
+	button_timer.start();
+};
+
+
 var rowSize = 0,
 	row;
 
@@ -30,28 +54,9 @@ Ti.App.addEventListener('app:track.added', function(track){
 	});
 	
 	button.addEventListener('click', function(e){
-		var date = new Date();
-		var prettyTime = String.formatDate(date) + " " + String.formatTime(date);
-		Titanium.API.info("You clicked button at " + prettyTime);
-		button.title = "Please Wait.";
-		var millisecondsTillTopOfMinute = 60000 - (Date.now() % 60000);
-		var secondsTillTopOfMinute = Math.floor(millisecondsTillTopOfMinute / 1000);
-		Titanium.API.info(secondsTillTopOfMinute + " seconds till audio starts.");
-		var button_timer = new countDown({
-			m : 0,
-			s : 3, //secondsTillTopOfMinute,
-			fn_tick : function() {
-				button.title = button_timer.time.s;
-			},
-			fn_end : function() {
-				Player.setUrl(track.file_path);
-				Player.play();
-			}
-		});
-		button_timer.start();
-	}); 
+		onTrackClick(button, track);
+	});
 
-	
 	if (!row){
 		row = Titanium.UI.createView({
 			width: '90%',
