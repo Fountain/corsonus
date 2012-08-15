@@ -7,6 +7,11 @@ if (platform === 'iphone' || platform === 'ipad'){
 
 var sound;
 exports.playTrack = function(track){
+	Ti.API.info('playing track + ' + track.file_path);
+	if (sound){
+		sound.release();
+	}
+	
 	sound = Ti.Media.createSound({
 		allowBackground: true, // for Android
 		url: track.file_path

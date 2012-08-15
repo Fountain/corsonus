@@ -1,8 +1,14 @@
-var userDir = Titanium.Filesystem.getApplicationDataDirectory();
+var storageDir;
+// see http://docs.appcelerator.com/titanium/2.1/index.html#!/api/Titanium.Filesystem-property-applicationDataDirectory
+if (Ti.Platform.getOsname() === 'android'){
+	storageDir = Titanium.Filesystem.getExternalStorageDirectory();
+} else {
+	storageDir = Titanium.Filesystem.getApplicationDataDirectory();
+}
 
 var getAudioFile = function(url){
 	var filename = url.match(/\/([^\/]+)$/)[1];
-	return Titanium.Filesystem.getFile(userDir, filename);
+	return Titanium.Filesystem.getFile(storageDir, filename);
 };
 
 exports.download = function(url, callback){
