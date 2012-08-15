@@ -1,3 +1,5 @@
+var Timer = require('timer');
+
 var startTime, timer;
 
 var msRemaining = function(){
