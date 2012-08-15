@@ -19,4 +19,4 @@ sound.addEventListener('complete', function(){
 });
 
 
-exports = sound;
+module.exports = sound;

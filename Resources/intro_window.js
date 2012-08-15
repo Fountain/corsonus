@@ -26,4 +26,4 @@ var bodyLabel = Titanium.UI.createLabel({
 introWindow.add(bodyLabel);
 
 
-exports = introWindow;
+module.exports = introWindow;

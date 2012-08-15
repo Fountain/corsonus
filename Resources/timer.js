@@ -1,4 +1,4 @@
-exports = function(opts){
+module.exports = function(opts){
 	return {
 		total_sec: opts.m * 60 + opts.s,
 		timer:this.timer,

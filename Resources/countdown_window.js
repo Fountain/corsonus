@@ -39,4 +39,4 @@ countdownWindow.add(titleLabel);
 countdownWindow.add(countdownLabel);
 countdownWindow.add(instructionsLabel);
 
-exports = countdownWindow;
+module.exports = countdownWindow;

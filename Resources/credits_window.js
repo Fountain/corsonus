@@ -24,4 +24,4 @@ creditsScroller.add(creditsLabel);
 creditsWindow.add(creditsScroller);
 
 
-exports = creditsWindow;
+module.exports = creditsWindow;
