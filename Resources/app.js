@@ -63,9 +63,9 @@ var onMusicPlay = function(){
 };
 
 Ti.App.addEventListener('app:remote.start', onMusicPlay);
-Player.addEventListener('resume', onMusicPlay);
+Ti.App.addEventListener('app:player.resume', onMusicPlay);
 
-Player.addEventListener('complete', function(){
+Ti.App.addEventListener('app:player.complete', function(){
 	introWindow.close();
 	tracksWindow.close();
 	countdownWindow.close();

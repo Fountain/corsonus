@@ -5,18 +5,21 @@ if (platform === 'iphone' || platform === 'ipad'){
 	Ti.Media.setAudioSessionMode(Ti.Media.AUDIO_SESSION_MODE_PLAYBACK);
 }
 
-var sound = Ti.Media.createSound({
-	allowBackground: true // for Android
-});
+var sound;
+exports.playTrack = function(track){
+	sound = Ti.Media.createSound({
+		allowBackground: true, // for Android
+		url: track.file_path
+	});
+	
+	sound.addEventListener('resume', function(){
+		Ti.App.fireEvent('app:player.resume');
+	});
+	
+	sound.addEventListener('complete', function(){
+		sound.release();
+		Ti.App.fireEvent('app:player.complete');
+	});
 
-sound.playTrack = function(track){
-	sound.setUrl(track.file_path);
 	sound.play();
 };
-
-sound.addEventListener('complete', function(){
-	sound.release();
-});
-
-
-module.exports = sound;

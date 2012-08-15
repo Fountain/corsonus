@@ -1,4 +1,5 @@
-var DataStore = require('data_store');
+var DataStore = require('data_store'),
+	Player = require('player');
 
 // root window
 var tracksWindow = Titanium.UI.createWindow({
