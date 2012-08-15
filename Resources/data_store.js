@@ -1,3 +1,5 @@
+var ScoreStore = require('score_store');
+
 var lastUpdated, // milliseconds since epoch
 	manifestData = {}, // the JSON returned from the server
 	tracksByUrl = {};

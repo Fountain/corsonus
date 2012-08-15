@@ -1,3 +1,5 @@
+var DataStore = require('data_store');
+
 // root window
 var tracksWindow = Titanium.UI.createWindow({
     navBarHidden: true,

@@ -1,3 +1,5 @@
+var DataStore = require('data_store');
+
 var creditsWindow = Titanium.UI.createWindow({
     navBarHidden: true,
     layout: 'vertical'
