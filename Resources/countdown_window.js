@@ -6,7 +6,7 @@ var countdownWindow = Titanium.UI.createWindow({
 // title
 var titleLabel = Titanium.UI.createLabel({
 	color:'#999',
-	text:'The performance will begin in',
+	text:'Corsonus will begin in',
 	font:{fontSize:22, fontFamily:'Helvetica Neue'},
 	top: 30,
 	textAlign:'center',

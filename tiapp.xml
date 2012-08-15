@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
     <deployment-targets>
-        <target device="mobileweb">true</target>
+        <target device="mobileweb">false</target>
         <target device="iphone">true</target>
         <target device="ipad">true</target>
-        <target device="android">false</target>
+        <target device="android">true</target>
         <target device="blackberry">false</target>
     </deployment-targets>
     <sdk-version>2.1.1.GA</sdk-version>
     <id>com.corsonus.corsonus</id>
     <name>corsonus</name>
-    <version>.14</version>
-    <publisher>fountain</publisher>
+    <version>1.0</version>
+    <publisher>FWIW</publisher>
     <url>http://corsonus.com</url>
     <description>not specified</description>
-    <copyright>2012 by Brian Fountain</copyright>
-    <icon>icon@2x.png</icon>
+    <copyright>2012 FWIW</copyright>
+    <icon>icon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
     <statusbar-style>default</statusbar-style>
