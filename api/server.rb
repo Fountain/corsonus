@@ -10,6 +10,12 @@ require 'json'
 
 TRACKS = JSON.parse File.read(File.join(File.dirname(__FILE__), 'tracks.json'))
 
+
+before '/twilio/*' do
+  @sid = params[:CallSid]
+  @tracks_by_sid[@sid] ||= nil
+end
+
 get '/twilio/call' do
   response = Twilio::TwiML::Response.new do |r|
     r.Say "Welcome to Corsonus. This application has been designed to accompany a live theatrical performance.  You can always visit corsonus.com for more details."
@@ -25,10 +31,26 @@ get '/twilio/call' do
   response.text
 end
 
+# registered as the Status Callback URL
+# see https://www.twilio.com/docs/api/twiml/twilio_request#asynchronous
+post '/twilio/hangup' do
+  @tracks_by_sid.delete @sid
+end
+
 post '/twilio/choose_song' do
+  track = TRACKS[params[:Digits].to_i - 1]
+
   response = Twilio::TwiML::Response.new do |r|
-    r.Say "You have chosen #{params[:Digits]}."
+    if track
+      r.Say "You have chosen #{track['name']}."
+    else
+      track = TRACKS.sample
+      r.Say "You failed the first test.  We have chosen for you.  You will be listening to #{track['name']}."
+    end
   end
+
+  @tracks_by_sid[@sid] = track
+
   response.text
 end
 
