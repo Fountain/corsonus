@@ -72,7 +72,7 @@ get '/twilio/listen' do
       end
 
       # wait until the start time, if necessary
-      remaining = (Time.now - start).round
+      remaining = (start - Time.now).round
       r.Pause(remaining) if remaining >= 1
 
       r.Play track['audio_url']
