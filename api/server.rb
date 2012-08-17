@@ -8,6 +8,7 @@ require 'json'
 
 TRACKS = JSON.parse File.read(File.join(File.dirname(__FILE__), 'tracks.json'))
 
+set :root, File.dirname(__FILE__)
 enable :logging
 
 set :start_time, nil
@@ -84,8 +85,17 @@ get '/twilio/listen' do
 end
 
 
+get '/trigger' do
+  if settings.start_time
+    haml :countdown
+  else
+    haml :trigger
+  end
+end
+
 post '/trigger' do
-  # interrupt all calls
+  set :start_time, Time.now + 10
+  haml :countdown
 end
 
 

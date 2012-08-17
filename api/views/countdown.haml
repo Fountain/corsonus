@@ -1,0 +1,23 @@
+#counter
+
+:javascript
+  var startTime = #{(settings.start_time.to_f * 1000).to_i},
+    el = document.getElementById('counter');
+
+  var remaining = function(){
+    return Math.round((startTime - Date.now()) / 1000);
+  };
+
+  var writeTime = function(){
+    var diff = remaining();
+    el.innerHTML = diff;
+  };
+
+  writeTime();
+  var interval = setInterval(function(){
+    if (remaining() < 0){
+      clearInterval(interval);
+    } else {
+      writeTime();
+    }
+  }, 1000);
