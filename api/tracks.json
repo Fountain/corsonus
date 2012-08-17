@@ -1,0 +1,22 @@
+[
+  {
+    "audio_url": "http://corsonus.com/audio/0001/corsonus-watts-001.mp3",
+    "name": "Wave",
+    "artist_name": "Reggie Watts"
+  },
+  {
+    "audio_url": "http://corsonus.com/audio/0001/corsonus-walker-001.mp3",
+    "name": "Pump",
+    "artist_name": "Tyler Walker"
+  },
+  {
+    "audio_url": "http://corsonus.com/audio/0001/corsonus-fountain-001.mp3",
+    "name": "Call",
+    "artist_name": "Brian Fountain"
+  },
+  {
+    "audio_url": "http://corsonus.com/audio/0001/corsonus-family-001.mp3",
+    "name": "Ties",
+    "artist_name": "Family"
+  }
+]
