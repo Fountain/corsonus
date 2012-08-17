@@ -8,6 +8,7 @@ require 'json'
 
 TRACKS = JSON.parse File.read(File.join(File.dirname(__FILE__), 'tracks.json'))
 
+set :start_time, nil
 set :tracks_by_sid, {}
 
 before '/twilio/*' do
@@ -37,21 +38,52 @@ post '/twilio/hangup' do
 end
 
 post '/twilio/choose_song' do
-  track = TRACKS[params[:Digits].to_i - 1]
-
   response = Twilio::TwiML::Response.new do |r|
+    track = TRACKS[params[:Digits].to_i - 1]
+
     if track
-      r.Say "You have chosen #{track['name']}."
+      r.Say "You have chosen #{track['name']}.  Please wait."
     else
       track = TRACKS.sample
-      r.Say "You failed the first test.  We have chosen for you.  You will be listening to #{track['name']}."
+      r.Say "You failed the first test.  We have chosen for you.  You will be listening to #{track['name']}.  Hope you like it."
     end
+
+    options.tracks_by_sid[@sid] = track
+
+    r.Redirect '/twilio/listen', method: 'GET'
   end
-
-  options.tracks_by_sid[@sid] = track
-
   response.text
 end
+
+get '/twilio/listen' do
+  response = Twilio::TwiML::Response.new do |r|
+    start = options.start_time
+    if start
+      remaining = Time.now - start
+      if remaining <= 1
+        # start!
+        track = options.tracks_by_sid[@sid]
+        if track.nil?
+          logger.info "track not set for caller #{@sid}"
+          track = TRACKS.shuffle
+        end
+
+        r.Play track['audio_url']
+      else
+        # wait until the start time
+        wait = remaining.to_i
+        logger.info "waiting #{wait} seconds"
+        r.Pause wait
+      end
+    else
+      logger.info "no start time - waiting"
+      r.Pause length: 3
+      r.Redirect '/twilio/listen', method: 'GET'
+    end
+  end
+  response.text
+end
+
 
 post '/trigger' do
   # interrupt all calls
