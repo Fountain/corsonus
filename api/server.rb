@@ -21,13 +21,14 @@ end
 
 get '/twilio/call' do
   response = Twilio::TwiML::Response.new do |r|
-    r.Say "Welcome to Corsonus. This application has been designed to accompany a live theatrical performance.  You can always visit corsonus.com for more details."
-    
     r.Gather action: '/twilio/choose_song', numDigits: 1 do |g|
+      g.Say "Welcome to Corsonus. This application has been designed to accompany a live theatrical performance.  You can always visit corsonus.com for more details."
+      g.Pause length: 1
       g.Say "Please select an audio performance."
       
       TRACKS.each_with_index do |track, i|
         g.Say "Press #{i + 1} for #{track['name']}."
+        g.Pause length: 1
       end
     end
   end
