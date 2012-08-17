@@ -1,8 +1,6 @@
 require 'sinatra'
 require 'json'
 
-@tracks_by_sid = {}
-
 @twilio = Twilio::REST::Client.new(
   TWILIO_SID = ENV['CORSONUS_TWILIO_SID'] || raise("please set CORSONUS_TWILIO_SID"),
   TWILIO_TOKEN = ENV['CORSONUS_TWILIO_TOKEN'] || raise("please set CORSONUS_TWILIO_TOKEN")
@@ -10,10 +8,11 @@ require 'json'
 
 TRACKS = JSON.parse File.read(File.join(File.dirname(__FILE__), 'tracks.json'))
 
+set :tracks_by_sid, {}
 
 before '/twilio/*' do
   @sid = params[:CallSid]
-  @tracks_by_sid[@sid] ||= nil
+  options.tracks_by_sid[@sid] ||= nil
 end
 
 get '/twilio/call' do
@@ -34,7 +33,7 @@ end
 # registered as the Status Callback URL
 # see https://www.twilio.com/docs/api/twiml/twilio_request#asynchronous
 post '/twilio/hangup' do
-  @tracks_by_sid.delete @sid
+  options.tracks_by_sid.delete @sid
 end
 
 post '/twilio/choose_song' do
@@ -49,7 +48,7 @@ post '/twilio/choose_song' do
     end
   end
 
-  @tracks_by_sid[@sid] = track
+  options.tracks_by_sid[@sid] = track
 
   response.text
 end
