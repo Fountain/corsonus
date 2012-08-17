@@ -1,23 +1,32 @@
 #counter
 
 :javascript
-  var startTime = #{(settings.start_time.to_f * 1000).to_i},
-    el = document.getElementById('counter');
+  (function(){
+    var startTime = #{(settings.start_time.to_f * 1000).to_i},
+      $el = $('#counter');
 
-  var remaining = function(){
-    return Math.round((startTime - Date.now()) / 1000);
-  };
+    // number of seconds
+    var remaining = function(){
+      return Math.round((startTime - Date.now()) / 1000);
+    };
 
-  var writeTime = function(){
-    var diff = remaining();
-    el.innerHTML = diff;
-  };
+    var writeTime = function(){
+      var diff = remaining();
+      $el.text(diff);
+      if (diff < 1){
+        $('html').css('background-color', 'red');
+      }
+    };
 
-  writeTime();
-  var interval = setInterval(function(){
-    if (remaining() < 0){
-      clearInterval(interval);
-    } else {
-      writeTime();
-    }
-  }, 1000);
+    var interval = setInterval(function(){
+      var wait = remaining();
+
+      if (wait < 0) {
+        clearInterval(interval);
+      } else {
+        writeTime();
+      }
+    }, 1000);
+
+    writeTime();
+  })();
