@@ -8,12 +8,14 @@ require 'json'
 
 TRACKS = JSON.parse File.read(File.join(File.dirname(__FILE__), 'tracks.json'))
 
+enable :logging
+
 set :start_time, nil
 set :tracks_by_sid, {}
 
 before '/twilio/*' do
   @sid = params[:CallSid]
-  options.tracks_by_sid[@sid] ||= nil
+  settings.tracks_by_sid[@sid] ||= nil
 end
 
 get '/twilio/call' do
@@ -34,7 +36,8 @@ end
 # registered as the Status Callback URL
 # see https://www.twilio.com/docs/api/twiml/twilio_request#asynchronous
 post '/twilio/hangup' do
-  options.tracks_by_sid.delete @sid
+  settings.tracks_by_sid.delete @sid
+  "OK"
 end
 
 post '/twilio/choose_song' do
@@ -48,7 +51,7 @@ post '/twilio/choose_song' do
       r.Say "You failed the first test.  We have chosen for you.  You will be listening to #{track['name']}.  Hope you like it."
     end
 
-    options.tracks_by_sid[@sid] = track
+    settings.tracks_by_sid[@sid] = track
 
     r.Redirect '/twilio/listen', method: 'GET'
   end
@@ -57,12 +60,12 @@ end
 
 get '/twilio/listen' do
   response = Twilio::TwiML::Response.new do |r|
-    start = options.start_time
+    start = settings.start_time
     if start
       remaining = Time.now - start
       if remaining <= 1
         # start!
-        track = options.tracks_by_sid[@sid]
+        track = settings.tracks_by_sid[@sid]
         if track.nil?
           logger.info "track not set for caller #{@sid}"
           track = TRACKS.shuffle
@@ -77,7 +80,7 @@ get '/twilio/listen' do
       end
     else
       logger.info "no start time - waiting"
-      r.Pause length: 3
+      r.Pause length: 5
       r.Redirect '/twilio/listen', method: 'GET'
     end
   end
