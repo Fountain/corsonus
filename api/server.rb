@@ -62,22 +62,18 @@ get '/twilio/listen' do
   response = Twilio::TwiML::Response.new do |r|
     start = settings.start_time
     if start
-      remaining = Time.now - start
-      if remaining <= 1
-        # start!
-        track = settings.tracks_by_sid[@sid]
-        if track.nil?
-          logger.info "track not set for caller #{@sid}"
-          track = TRACKS.shuffle
-        end
-
-        r.Play track['audio_url']
-      else
-        # wait until the start time
-        wait = remaining.to_i
-        logger.info "waiting #{wait} seconds"
-        r.Pause wait
+      track = settings.tracks_by_sid[@sid]
+      if track.nil?
+        logger.info "track not set for caller #{@sid}"
+        track = TRACKS.shuffle
+        settings.tracks_by_sid[@sid] = track
       end
+
+      # wait until the start time, if necessary
+      remaining = (Time.now - start).round
+      r.Pause(remaining) if remaining >= 1
+
+      r.Play track['audio_url']
     else
       logger.info "no start time - waiting"
       r.Pause length: 5
