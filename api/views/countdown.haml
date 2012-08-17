@@ -1,4 +1,6 @@
 #counter
+%form#reset{action: '/reset', method: 'post', style: 'display:none'}
+  %input{type: 'submit', value: 'reset'}
 
 :javascript
   (function(){
@@ -23,6 +25,7 @@
 
       if (wait < 0) {
         clearInterval(interval);
+        $('#reset').show();
       } else {
         writeTime();
       }

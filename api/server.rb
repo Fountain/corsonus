@@ -98,6 +98,11 @@ post '/trigger' do
   haml :countdown
 end
 
+post '/reset' do
+  set :start_time, nil
+  redirect to('/trigger')
+end
+
 
 # the iOS api
 get '/start.json' do
