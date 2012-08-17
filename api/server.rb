@@ -12,7 +12,7 @@ TRACKS = JSON.parse File.read(File.join(File.dirname(__FILE__), 'tracks.json'))
 
 get '/twilio/call' do
   response = Twilio::TwiML::Response.new do |r|
-    r.Say "Welcome to Corsonus. This application has been designed to accompany a live theatrical performance.  You can always visit corsonus.com for more details.  Please choose a song."
+    r.Say "Welcome to Corsonus. This application has been designed to accompany a live theatrical performance.  You can always visit corsonus.com for more details."
     
     r.Gather action: '/twilio/choose_song', numDigits: 1 do |g|
       g.Say "Please select an audio performance."
@@ -26,7 +26,10 @@ get '/twilio/call' do
 end
 
 post '/twilio/choose_song' do
-  puts params.inspect
+  response = Twilio::TwiML::Response.new do |r|
+    r.Say "You have chosen #{params[:Digits]}."
+  end
+  response.text
 end
 
 post '/trigger' do
