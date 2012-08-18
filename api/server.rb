@@ -108,9 +108,9 @@ end
 # the iOS api
 get '/start.json' do
   content_type :json
-  time = Time.now.utc
-  # round up to the next minute
-  time = Time.utc time.year, time.mon, time.day, time.hour, (time.min + 1)
+  # allow cross-domain AJAX
+  headers 'Access-Control-Allow-Origin' => '*'
   # in milliseconds
-  { start_time: (time.to_f * 1000).to_i }.to_json
+  time = settings.start_time ? (settings.start_time.to_f * 1000).to_i : nil
+  { start_time: time }.to_json
 end
